@@ -1,7 +1,8 @@
 --Looking at the crash data from 2012
-select *
-from crash_analysis_system
-where crashYear >= 2012
+SELECT *
+FROMcrash_analysis_system
+WHERE crashYear >= 2012
+
 --Dealing with NULL values
 
 SELECT DISTINCT holiday
@@ -10,7 +11,7 @@ FROM Crash_Analysis_System
 UPDATE Crash_Analysis_System
 SET holiday = ISNULL(holiday, '') FROM Crash_Analysis_System
 
---Using crashLocation1 and crashLocation2 to populate areaUnitID
+--Using [crashLocation1] and [crashLocation2] to populate [areaUnitID]
 
 SELECT c1.areaUnitID, c1.crashLocation1, c1.crashLocation2, c2.areaUnitID, c2.crashLocation1, c2.crashLocation2, ISNULL(c2.areaUnitID, c1.areaUnitID)
 FROM Crash_Analysis_System c1
@@ -23,7 +24,7 @@ FROM Crash_Analysis_System c1
 JOIN Crash_Analysis_System c2 ON c1.crashLocation1 = c2.crashLocation1 and c1.crashLocation2 = c2.crashLocation2 and c1.OBJECTID <> c2.OBJECTID
 WHERE c1.areaUnitID IS NOT NULL and c2.areaUnitID IS NULL and c1.crashYear >= 2012 and c2.crashYear >= 2012
 
---Using [areaUnitID] to see the value for [region] and replacing the NULL values to the corresponding region with matching areaUnitID
+--Using [areaUnitID] to see the value for [region] and replacing the NULL values to the corresponding [region] with matching [areaUnitID]
 
 SELECT *, ISNULL(c2.region, c1.region)
 FROM Crash_Analysis_System c1
@@ -84,7 +85,7 @@ WHERE crashYear >= 2012
 group by crashSeverity
 order by  crashSeverity DESC
 
---Since 2012, the number of crashes based on the severity of the crash
+--Since 2012, the number of crashes based on the severity of the crash and it's %
 SELECT crashSeverity, count(*) as 'number_of_Crashes', ROUND( count(*)*100 / (SELECT cast(COUNT(*) as float) as 'Total' FROM Crash_Analysis_System WHERE crashYear >= 2012),2) as 'severity_percent'
 FROM Crash_Analysis_System
 WHERE crashYear >= 2012
@@ -111,7 +112,7 @@ WHERE crashYear >= 2012
 group by speedCategory
 
 
---Number of crash based on speedCategory divided up by the severity.
+--Number of crash based on speed category divided up by the severity, and the percentage of severity over the total number of crashes in respect to the speed category.
 SELECT c1.speedCategory, c1.crashSeverity, COUNT(*) as 'number_of_crashes', ROUND( count(*)*100/ CAST( (SELECT count(*) FROM Crash_Analysis_System c2 WHERE c1.speedCategory = c2.speedCategory GROUP BY speedCategory) as FLOAT), 2) as 'percent'
 FROM Crash_Analysis_System c1
 WHERE crashYear >= 2012
