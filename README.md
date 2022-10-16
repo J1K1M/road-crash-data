@@ -12,4 +12,5 @@ such a speed, lighting condition, weather and use the information that can poten
 
 
 The original data set can be gathered from [here](https://opendata-nzta.opendata.arcgis.com/search?tags=CAS)  
-The data at the time of creating this analysis was last updated on September 19th 2022.
+The data at the time of creating this analysis was last updated on September 19th 2022.  
+The Tableau dashboard https://public.tableau.com/app/profile/jay.kim1442/viz/RoadCrash_16652937642870/Road_Crash_Visualisation
